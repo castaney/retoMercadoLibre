@@ -19,8 +19,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.constants.MessagesModel;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.exception.DnaStructureException;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.shared.domainDnaBus.DnaValidation;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.infraestructure.DnaJPARepository;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -40,7 +43,7 @@ public class DnaControllerTest {
 	
 	
     @Test
-	public void verifyMutantTest() throws Exception {
+	public void verifyMutantTestAndStats() throws Exception {
 		List<String> listStringDNA=  new ArrayList<String>(Arrays.asList("ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"));
 		 ObjectMapper objectMapper= new ObjectMapper();
 		MvcResult resultSevice = mvc
@@ -98,12 +101,22 @@ public class DnaControllerTest {
 		Assertions.assertEquals(MessagesModel.STRING_FAIL_IN_STRUCTURE,
 				resultSevice.getResponse().getContentAsString());
 		
-		
-		
-
-		        
 
 	}
   
+    
+	@Test
+	public void verifyExistBeforeTest() throws Exception {
+		List<String> listStringDNA=  new ArrayList<String>(Arrays.asList("ATACGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"));
+		 ObjectMapper objectMapper= new ObjectMapper();
+		MvcResult resultSevice = mvc
+				.perform(MockMvcRequestBuilders.post("/mutant").contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(listStringDNA)))
+				.andExpect(status().isForbidden()).andReturn();
+		
+		
+		Assertions.assertEquals("DNA_EXIST_BEFORE",resultSevice.getResponse().getContentAsString());
+
+	}
 
 }

@@ -16,6 +16,7 @@ public interface DnaJPARepository extends JpaRepository<Dna,Long> {
 	
 	@Query(value = QueryConstants.QUERY_COUNT_MUTANT_NO_MUTANT,nativeQuery = true)
 	List<Object[]>getDataStatsFromDNA();
+	List<Dna> findByadn(String adn);
 	
 		
 }

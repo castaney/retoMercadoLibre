@@ -2,21 +2,14 @@ package com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.ex
 
 public class ModelError {
 	  private String message;
-	    private String codigo;
-	    private Object valor;
+
 
 	    public ModelError(String message, String codigo, Object valor) {
-	        this.message = message;
-	        this.setCodigo(codigo);
-	         this.setValor(valor);
+	        this.setMessage( message);
 	    }
 
-	    @Override
-	    public String toString() {
-	        return "{" +
-	                "message='" + message + "'\'"+" valor recibido:"+valor+ '\'' +
-	                '}';
-	    }
+	
+	 
 	    
 
 		/**
@@ -33,34 +26,10 @@ public class ModelError {
 			this.message = message;
 		}
 
-		/**
-		 * @return the codigo
-		 */
-		public String getCodigo() {
-			return codigo;
-		}
-
-		/**
-		 * @param codigo the codigo to set
-		 */
-		public void setCodigo(String codigo) {
-			this.codigo = codigo;
-		}
 
 	
 
-		/**
-		 * @return the valor
-		 */
-		public Object getValor() {
-			return valor;
-		}
+	
 
-		/**
-		 * @param valor the valor to set
-		 */
-		public void setValor(Object valor) {
-			this.valor = valor;
-		}
-
+	
 }

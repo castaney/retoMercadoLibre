@@ -1,5 +1,7 @@
 package com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.query;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -31,9 +33,14 @@ public class DnaStatsQueryHandler implements QueryHandler<DnaStatsQueryDTO>  {
 			countMutant=(Number) dnasObject.get(0)[1];
 		}
 		
-		Double valResult= countMutant!=null && countHuman!=null && countHuman.longValue()>0? countMutant.longValue()/countHuman.longValue():0.0;
+		Double valResult= countMutant!=null && countHuman!=null && countHuman.doubleValue()>0? countMutant.longValue()/countHuman.doubleValue():0.0;
+		DnaStatsQueryDTO dnaDTO=null;
+		if(valResult!=null && valResult>0) {
+		 BigDecimal valBig= new BigDecimal(valResult).setScale(2, RoundingMode.HALF_DOWN);
+			dnaDTO = new DnaStatsQueryDTO(countMutant != null ? countMutant.longValue() : 0,
+					countHuman != null ? countHuman.longValue() : 0, valBig != null ? valBig.doubleValue() : 0.0);
+		}
 		
-		DnaStatsQueryDTO dnaDTO= new DnaStatsQueryDTO(countMutant!=null? countMutant.longValue():0, countHuman!=null ? countHuman.longValue():0, valResult);
 		
 		return dnaDTO;
 	}

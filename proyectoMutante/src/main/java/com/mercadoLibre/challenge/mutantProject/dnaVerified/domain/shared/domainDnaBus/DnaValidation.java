@@ -21,26 +21,28 @@ public class DnaValidation implements DomainDnaBus {
 
 	/**
 	 * Metodo que verifica en la lista de strings si el adn
-	 * corresponde a un mutante revisando secuencia de AAAA , CCCC, DDDD, TTTT 
+	 * corresponde a un mutante revisando secuencia de AAAA, CCCC, DDDD, TTTT 
 	 * tanto vertical, diagonal y horizontalmente
 	 */
 	@Override
 	public boolean isMutant(List<String> listDna) throws DnaStructureException {
-		
-		ValidadorResult<Boolean> validaInfo=verifyStructure(listDna);
-		if(validaInfo.isError()) {
+
+		ValidadorResult<Boolean> validaInfo = verifyStructure(listDna);
+		if (validaInfo.isError()) {
 			throw new DnaStructureException(validaInfo.getMensaje());
 		}
-
 		Long countMutatn = 0L;
-		List<String> strings = getDiagonalHorizontalStrings(listDna);
-		Map<Integer, String> verticalStrings = getVerticalStrings(listDna);
-		strings.addAll(getMapList(verticalStrings));
-		listDna.addAll(strings);
+		if (validaInfo.ok()) {
 
-		for (String stringDnaI : listDna) {
-			// Se verifica horizontalmente
-			countMutatn = countMutatn + getCountDna(stringDnaI);
+			List<String> strings = getDiagonalHorizontalStrings(listDna);
+			Map<Integer, String> verticalStrings = getVerticalStrings(listDna);
+			strings.addAll(getMapList(verticalStrings));
+			listDna.addAll(strings);
+
+			for (String stringDnaI : listDna) {
+				// Se verifica horizontalmente
+				countMutatn = countMutatn + getCountDna(stringDnaI);
+			}
 		}
 
 		return (countMutatn != null && countMutatn > 1 ? Boolean.TRUE : Boolean.FALSE);
@@ -151,8 +153,11 @@ public class DnaValidation implements DomainDnaBus {
 			posInicial = posInicial + 1;
 			posFinal = posInicial + 4;
 			if (MutantDnaEnum.getDnaMutant(cadena)) {
-
 				contar++;
+				if ((stringDna.length() - posFinal) <3) {
+
+					break;
+				}
 			}
 		}
 

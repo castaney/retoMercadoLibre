@@ -33,6 +33,11 @@ public class Dna implements Serializable {
 		this.adn = adn;
 		this.esMutante = esMutante;
 	}
+	
+	
+	public Dna() {}
+
+
 	/**Identificador de la entidad*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

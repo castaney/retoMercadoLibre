@@ -1,0 +1,10 @@
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','Y');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');
+INSERT INTO pru_verificacion_adn (adn, es_mutante) VALUES('["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]','N');

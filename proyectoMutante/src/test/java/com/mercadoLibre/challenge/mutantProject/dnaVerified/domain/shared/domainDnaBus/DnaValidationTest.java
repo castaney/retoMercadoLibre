@@ -41,6 +41,19 @@ public class DnaValidationTest {
 		
 	}
 	
+	@Test
+	void  isHumanWithManyAs() throws DnaStructureException {
+		dnaValidation= new DnaValidation();
+		//entrada list de strings a verficar  “dna”:["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
+		List<String> listStringDNA=  new ArrayList<String>(Arrays.asList("ATGCGA","AGTGCC","ATATGT","AGAAGG","ATCCTA","ACACTG"));
+		//test result=1 que indica que encontro 1 coincidencia
+		
+		boolean isMutant=dnaValidation.isMutant(listStringDNA);
+		//assert == false
+		Assertions.assertFalse(isMutant );
+		
+	}
+	
 	/**
 	 * Se espera que la prueba salte a la excepcion por error en estructura
 	 */

@@ -15,6 +15,7 @@ import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.command.C
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.commandBus.CommandBus;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.query.DnaStatsQueryDTO;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.query.querybus.QueryBus;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.infraestructure.share.constants.MessageInfraestructure;
 
 
 @RestController
@@ -34,7 +35,7 @@ public class DnaController {
 	public ResponseEntity verifyMutant(@RequestBody List<String> dnaList)  {
 		 
 		if(dnaList==null || dnaList.isEmpty()) {
-			return new ResponseEntity<>("Error, you should add a DNA", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(MessageInfraestructure.SHOULD_ADD_DNA, HttpStatus.FORBIDDEN);
 		}
 		CreateAdnCommand command = CreateAdnCommand.Builder.getInstance()
 	                .adnList(dnaList)
@@ -52,7 +53,7 @@ public class DnaController {
 	
 	   @GetMapping("/stats")
 	    @ResponseBody
-	    public ResponseEntity<DnaStatsQueryDTO> getEvent() throws Exception {
+	    public ResponseEntity<DnaStatsQueryDTO> getStatsCheck() throws Exception {
 	  
 		   DnaStatsQueryDTO dnaStatistics = queryBus.handle(DnaStatsQueryDTO.class.getCanonicalName());
 	        if (dnaStatistics == null) {

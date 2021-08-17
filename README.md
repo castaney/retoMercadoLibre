@@ -15,7 +15,7 @@ En donde recibirás como parámetro un array de Strings que representan cada fil
 Sabrás si un humano es mutante, si encuentras **más de una secuencia de cuatro letras iguales,** de forma oblicua, horizontal o vertical.
 
 **Ejemplo (Caso mutante)**:
-```json
+```
 String[] dna = {"ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"};
 ```
 

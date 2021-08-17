@@ -89,7 +89,7 @@ Al ejecutar este servicio se obtendrá la información de la estadística de los
 
 
 # Cobertura
-La siguiente imagen es el resultado de la cobertura de las pruebas unitarias utilizando la herramienta Jacoco:
+La siguiente imagen es el resultado de la cobertura de las pruebas unitarias utilizando la herramienta **Jacoco**:
 
 ![Cobertura](https://github.com/castaney/retoMercadoLibre/blob/main/image_2021_08_17T02_53_55_539Z.png?raw=true)
 

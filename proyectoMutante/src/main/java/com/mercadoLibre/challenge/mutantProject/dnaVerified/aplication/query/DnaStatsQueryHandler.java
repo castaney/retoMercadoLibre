@@ -24,22 +24,28 @@ public class DnaStatsQueryHandler implements QueryHandler<DnaStatsQueryDTO>  {
 
 	@Override
 	public DnaStatsQueryDTO handle() throws Exception {
-		List<Object[]> dnasObject= dnaRepository.getDataStatsFromDNA();
-		
-		Number countHuman=0L;
-		Number countMutant=0L;
-		if(dnasObject!=null && !dnasObject.isEmpty()) {
-			countHuman=(Number) dnasObject.get(0)[0];
-			countMutant=(Number) dnasObject.get(0)[1];
+		List<Object[]> dnasObject = dnaRepository.getDataStatsFromDNA();
+		DnaStatsQueryDTO dnaDTO = null;
+		Number countHuman = 0L;
+		Number countMutant = 0L;
+		if (dnasObject != null && !dnasObject.isEmpty()) {
+			countHuman = (Number) dnasObject.get(0)[0];
+			countMutant = (Number) dnasObject.get(0)[1];
+ 
+			if (!(countHuman.longValue() == 0 && countMutant.longValue() == 0)) {
+				dnaDTO = new DnaStatsQueryDTO(countMutant != null ? countMutant.longValue() : 0,
+						countHuman != null ? countHuman.longValue() : 0, 0.0);
+			}
+			
 		}
 		
 		Double valResult= countMutant!=null && countHuman!=null && countHuman.doubleValue()>0? countMutant.longValue()/countHuman.doubleValue():0.0;
-		DnaStatsQueryDTO dnaDTO=null;
-		if(valResult!=null && valResult>0) {
+		
+		if(valResult!=null && dnaDTO!=null) {
 		 BigDecimal valBig= new BigDecimal(valResult).setScale(2, RoundingMode.HALF_DOWN);
-			dnaDTO = new DnaStatsQueryDTO(countMutant != null ? countMutant.longValue() : 0,
-					countHuman != null ? countHuman.longValue() : 0, valBig != null ? valBig.doubleValue() : 0.0);
+			dnaDTO.setRatio(valBig != null ? valBig.doubleValue() : 0.0);
 		}
+		
 		
 		
 		return dnaDTO;

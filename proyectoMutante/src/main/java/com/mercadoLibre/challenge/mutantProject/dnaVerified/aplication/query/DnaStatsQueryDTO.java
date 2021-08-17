@@ -15,7 +15,7 @@ public class DnaStatsQueryDTO extends Query implements Serializable{
 	private Long countHumanDna;
 	private Double ratio;
 	
-	
+	public DnaStatsQueryDTO() {}
 	public DnaStatsQueryDTO(Long countMutantDna, Long countHumanDna, Double ratio) {
 		this.countMutantDna = countMutantDna;
 		this.countHumanDna = countHumanDna;

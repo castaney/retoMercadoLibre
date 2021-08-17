@@ -103,9 +103,9 @@ La **arquitectura hexagonal** permite que una aplicación sea usada de la misma 
 Permite crear una aplicación para que funcione sin una interfaz de usuario o una base de datos de tal forma que pueda ejecutar pruebas de regresión automatizadas, trabajar aún cuando la base de datos no esté disponible y conectar aplicaciones sin la intervención del usuario.
 
 Todo evento externo (i.e. como pedidos http) que llega a la aplicación por un puerto, es convertido, a través de un adaptador específico a la tecnología del evento externo, en una llamada a un procedimiento o un mensaje entendible por la aplicación. (Por ello) la aplicación es “felizmente” ignorante de la naturaleza de los dispositivos de entrada. Cuando la aplicación tiene algo que enviar, lo hace por un puerto a un adaptador, el cual crea las señales apropiadas, necesarias por la tecnología receptora (humana o automatizada). La aplicación tiene una interacción semántica con los adaptadores de todos sus lados, sin saber realmente la naturaleza de las cosas del otro lado de los adaptadores.
-<center>
+
 ![Arquitectura hexagonal](https://github.com/castaney/retoMercadoLibre/blob/main/2021-08-16_221515.png?raw=true)
-</center>
+
 El hexágono tiene el propósito de resaltar visualmente:
 <br>**(a)** La asimetría interna-externa y la naturaleza similar de los puertos, con el fin de alejarse de la imagen unidimensional de las capas y todo lo que ella evoca, y
 <br>**(b)** la presencia de un número definido de diferentes puertos— 2, 3 o 4.

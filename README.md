@@ -15,7 +15,9 @@ En donde recibirás como parámetro un array de Strings que representan cada fil
 Sabrás si un humano es mutante, si encuentras **más de una secuencia de cuatro letras iguales,** de forma oblicua, horizontal o vertical.
 
 **Ejemplo (Caso mutante)**:
-`String[] dna = {"ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"};`
+```json
+String[] dna = {"ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"};
+```
 
 En este caso el llamado a la función isMutant(dna) devuelve “true”.
 
@@ -34,7 +36,7 @@ Desarrolla el algoritmo de la manera más eficiente posible.
 # Objetivos
 
 **Nivel 1**:
-Programa (en cualquier lenguaje de programación) que cumpla con el método pedido por Magneto.
+<br>Programa (en cualquier lenguaje de programación) que cumpla con el método pedido por Magneto.
 
 **Nivel 2**:
 Crear una API REST, hostear esa API en un cloud computing libre (Google App Engine, Amazon AWS, etc), crear el servicio “/mutant/” en donde se pueda detectar si un humano es mutante enviando la secuencia de ADN mediante un HTTP POST con un Json el cual tenga el siguiente formato:

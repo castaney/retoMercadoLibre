@@ -94,7 +94,7 @@ La siguiente imagen es el resultado de la cobertura de las pruebas unitarias uti
 ![Cobertura](https://github.com/castaney/retoMercadoLibre/blob/main/image_2021_08_17T02_53_55_539Z.png?raw=true)
 
 Para mayor detalle, ver los archivos generados en el siguiente enlace:
-https://github.com/castaney/retoMercadoLibre/tree/main/jacoco
+<br>https://github.com/castaney/retoMercadoLibre/tree/main/jacoco
 
 
 # Arquitectura
@@ -107,7 +107,7 @@ Todo evento externo (i.e. como pedidos http) que llega a la aplicación por un p
 ![Arquitectura hexagonal](https://github.com/castaney/retoMercadoLibre/blob/main/2021-08-16_221515.png?raw=true)
 
 El hexágono tiene el propósito de resaltar visualmente:
-**(a)** La asimetría interna-externa y la naturaleza similar de los puertos, con el fin de alejarse de la imagen unidimensional de las capas y todo lo que ella evoca, y
+<br>**(a)** La asimetría interna-externa y la naturaleza similar de los puertos, con el fin de alejarse de la imagen unidimensional de las capas y todo lo que ella evoca, y
 <br>**(b)** la presencia de un número definido de diferentes puertos— 2, 3 o 4.
 
 **Nota:**

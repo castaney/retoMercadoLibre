@@ -12,7 +12,12 @@ import org.springframework.stereotype.Component;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.commandBus.Command;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.commandBus.CommandBus;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.commandBus.CommandHandler;
-
+/**
+ * Clase encargada de ejecutar los comandos y llamar a los casos de uso
+ * correspondientes
+ * @author Uberney Castaneda Garzon <castaney@gmail.com>
+ *
+ */
 @Component
 @Primary
 public class SpringCommandBus implements CommandBus {

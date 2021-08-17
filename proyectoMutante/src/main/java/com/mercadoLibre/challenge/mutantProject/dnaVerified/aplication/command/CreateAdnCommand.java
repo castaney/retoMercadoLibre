@@ -27,7 +27,12 @@ public class CreateAdnCommand  extends Command{
 	public void setAdnList(List<String> adnList) {
 		this.adnList = adnList;
 	}
-	
+	/**
+	 * Permite construir una instancia de la clase
+	 * CreateAdnCommand
+	 * @author Uberney Castaneda Garzon <castaney@gmail.com>
+	 *
+	 */
 	public static class Builder {
 
         private List<String> adnList;

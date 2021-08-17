@@ -1,6 +1,7 @@
 package com.mercadoLibre.challenge.mutantProject.dnaVerified.infraestructure.spring;
 
 import java.lang.reflect.ParameterizedType;
+
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,12 @@ import org.springframework.stereotype.Component;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.query.querybus.Query;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.query.querybus.QueryBus;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.query.querybus.QueryHandler;
+/**
+ * Clase encargada de ejecutar los consultas y llamar a los casos de uso
+ * correspondientes
+ * @author Uberney Castaneda Garzon <castaney@gmail.com>
+ *
+ */
 @Component
 @Primary
 public class SpringQueryBus implements QueryBus {

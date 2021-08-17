@@ -31,6 +31,12 @@ public class DnaController {
 	        this.commandBus = commandBus;
 	    }
 
+	  /**
+	   * Servicio que verifica si una secuencia de ADN corresponde
+	   * a un mutante o no
+	   * @param dnaList lista con las cadenas de un ADN
+	   * @return true si es mutante
+	   */
 	@PostMapping
 	public ResponseEntity verifyMutant(@RequestBody List<String> dnaList)  {
 		 
@@ -51,15 +57,25 @@ public class DnaController {
 		return ResponseEntity.ok(returnVerify);
 	}
 	
-	   @GetMapping("/stats")
-	    @ResponseBody
-	    public ResponseEntity<DnaStatsQueryDTO> getStatsCheck() throws Exception {
-	  
-		   DnaStatsQueryDTO dnaStatistics = queryBus.handle(DnaStatsQueryDTO.class.getCanonicalName());
-	        if (dnaStatistics == null) {
-	            return ResponseEntity.noContent().build();
-	        }
-	        return ResponseEntity.ok().body(dnaStatistics);
-	    }
+	/**
+	 * Metodo qeu permite 
+	 * consultar las verificaciones con el fin
+	 * de mostrar estadisticas de la informacion
+	 * verificada y asi saber cuantos han sido
+	 * verificados como mutantes y cuantos como humanos para
+	 * ayudar a magneto.
+	 * @return
+	 * @throws Exception
+	 */
+	@GetMapping("/stats")
+	@ResponseBody
+	public ResponseEntity<DnaStatsQueryDTO> getStatsCheck() throws Exception {
+
+		DnaStatsQueryDTO dnaStatistics = queryBus.handle(DnaStatsQueryDTO.class.getCanonicalName());
+		if (dnaStatistics == null) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok().body(dnaStatistics);
+	}
 
 }

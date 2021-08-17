@@ -13,7 +13,13 @@ import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.commandBu
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.Dna;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.shared.domainDnaBus.DomainDnaBus;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.infraestructure.DnaJPARepository;
-
+/**
+ * Componente de aplicacion que se encarga de orquestar 
+ * las peticiones desde infraestructura hacia el modelo
+ * y viceversa
+ * @author Uberney Castaneda Garzon <castaney@gmail.com>
+ *
+ */
 @Component
 public class CreateAdnCommandHandler implements CommandHandler<CreateAdnCommand> {
 	private static final String NULL_COMMAND = "NULL_COMMAND";

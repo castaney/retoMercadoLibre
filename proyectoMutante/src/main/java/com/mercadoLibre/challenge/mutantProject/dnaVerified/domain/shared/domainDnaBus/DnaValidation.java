@@ -13,7 +13,12 @@ import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.con
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.exception.DnaStructureException;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.exception.ModelError;
 import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.exception.ValidadorResult;
-
+/**
+ * Componente que valida la informacion del ADN chequeando si es o
+ * no mutante
+ * @author Uberney Castaneda Garzon <castaney@gmail.com>
+ *
+ */
 @Component
 public class DnaValidation implements DomainDnaBus {
 
@@ -34,7 +39,7 @@ public class DnaValidation implements DomainDnaBus {
 		Long countMutatn = 0L;
 		if (validaInfo.ok()) {
 
-			List<String> strings = getDiagonalHorizontalStrings(listDna);
+			List<String> strings = getDiagonalInvertStrings(listDna);
 			Map<Integer, String> verticalStrings = getVerticalStrings(listDna);
 			strings.addAll(getMapList(verticalStrings));
 			listDna.addAll(strings);
@@ -48,8 +53,12 @@ public class DnaValidation implements DomainDnaBus {
 		return (countMutatn != null && countMutatn > 1 ? Boolean.TRUE : Boolean.FALSE);
 
 	}
-	
-	private List<String> getDiagonalHorizontalStrings(List<String> dnaList) {
+	/**
+	 * permite obtener la diagonal y la diagonal invertida de la lista de strings
+	 * @param dnaList, lista que viene por parametro
+	 * @return lista de strings con las dos diagonales
+	 */
+	private List<String> getDiagonalInvertStrings(List<String> dnaList) {
 		int contDiagonal = 0;
 		int contInvertedDiagonal = dnaList.get(0).length();
 		List<String> listResult = new ArrayList<String>();
@@ -60,8 +69,10 @@ public class DnaValidation implements DomainDnaBus {
 			if (contDiagonal >= string.length() || contInvertedDiagonal <= 0) {
 				break;
 			}
+			//se recorre uno a uno sumando siempre un valor para que tome  la primera diagonal
 			stringResult += string.substring(contDiagonal, contDiagonal + 1);
 			contDiagonal++;
+			//se recorre uno a uno sumando siempre un valor para que tome  la segunda diagonal
 			stringResultInv += string.substring(contInvertedDiagonal - 1, contInvertedDiagonal);
 			contInvertedDiagonal--;
 		}
@@ -74,8 +85,8 @@ public class DnaValidation implements DomainDnaBus {
 	/**
 	 * Este metodo permite obtner una lista con la informacion recuperada del mapa
 	 * 
-	 * @param verticalStrings
-	 * @return
+	 * @param verticalStrings, mapa con los strings verticales
+	 * @return lista de strings
 	 */
 	private Collection<String> getMapList(Map<Integer, String> verticalStrings) {
 
@@ -83,6 +94,13 @@ public class DnaValidation implements DomainDnaBus {
 		return cadenas;
 	}
 
+	/**
+	 * Se recorre la informacion de la lista de strings
+	 * y se llama a metodo por cada iteracion para rearmar
+	 * la secuencia pero de forma vertical
+	 * @param stringList
+	 * @return
+	 */
 	private Map<Integer, String> getVerticalStrings(List<String> stringList) {
 		Map<Integer, String> strings = new HashMap<Integer, String>();
 		for (String string : stringList) {
@@ -94,9 +112,9 @@ public class DnaValidation implements DomainDnaBus {
 	/**
 	 * Este metodo permite pasar por referencia al mapa cada una de las letras
 	 * verticales dentro del arreglo de string
+	 * De esta forma se organiza segun la posicion la cadena que se
+	 * debera construir verticalmente
 	 * 
-	 * @param string
-	 * @param strings
 	 */
 	private void getVerticalListXString(String string, Map<Integer, String> strings) {
 
@@ -146,14 +164,18 @@ public class DnaValidation implements DomainDnaBus {
 	private int getCountDna(String stringDna) {
 		int veces = stringDna.length() - 3;
 		int posInicial = 0;
+		//Secuencia de 4 letras
 		int posFinal = 4;
 		int contar = 0;
 		for (int i = 0; i <= (veces - 1); i++) {
+			//Se selecciona desde la posicion inicial a la posicion final (+4)
 			String cadena = stringDna.substring(posInicial, posFinal);
 			posInicial = posInicial + 1;
 			posFinal = posInicial + 4;
+			//Si es una cadena mutante 
 			if (MutantDnaEnum.getDnaMutant(cadena)) {
 				contar++;
+				//si faltan menos de cuatro caracteres por verificar
 				if ((stringDna.length() - posFinal) <3) {
 
 					break;

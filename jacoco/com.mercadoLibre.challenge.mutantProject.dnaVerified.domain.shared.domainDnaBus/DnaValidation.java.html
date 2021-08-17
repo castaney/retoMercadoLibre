@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DnaValidation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">proyectoMutante</a> &gt; <a href="index.source.html" class="el_package">com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.shared.domainDnaBus</a> &gt; <span class="el_source">DnaValidation.java</span></div><h1>DnaValidation.java</h1><pre class="source lang-java linenums">package com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.shared.domainDnaBus;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
+
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.constants.MessagesModel;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.exception.DnaStructureException;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.exception.ModelError;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna.exception.ValidadorResult;
+
+@Component
+<span class="fc" id="L18">public class DnaValidation implements DomainDnaBus {</span>
+
+	
+
+	/**
+	 * Metodo que verifica en la lista de strings si el adn
+	 * corresponde a un mutante revisando secuencia de AAAA, CCCC, DDDD, TTTT 
+	 * tanto vertical, diagonal y horizontalmente
+	 */
+	@Override
+	public boolean isMutant(List&lt;String&gt; listDna) throws DnaStructureException {
+
+<span class="fc" id="L30">		ValidadorResult&lt;Boolean&gt; validaInfo = verifyStructure(listDna);</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">		if (validaInfo.isError()) {</span>
+<span class="fc" id="L32">			throw new DnaStructureException(validaInfo.getMensaje());</span>
+		}
+<span class="fc" id="L34">		Long countMutatn = 0L;</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">		if (validaInfo.ok()) {</span>
+
+<span class="fc" id="L37">			List&lt;String&gt; strings = getDiagonalHorizontalStrings(listDna);</span>
+<span class="fc" id="L38">			Map&lt;Integer, String&gt; verticalStrings = getVerticalStrings(listDna);</span>
+<span class="fc" id="L39">			strings.addAll(getMapList(verticalStrings));</span>
+<span class="fc" id="L40">			listDna.addAll(strings);</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">			for (String stringDnaI : listDna) {</span>
+				// Se verifica horizontalmente
+<span class="fc" id="L44">				countMutatn = countMutatn + getCountDna(stringDnaI);</span>
+			}
+		}
+
+<span class="pc bpc" id="L48" title="1 of 4 branches missed.">		return (countMutatn != null &amp;&amp; countMutatn &gt; 1 ? Boolean.TRUE : Boolean.FALSE);</span>
+
+	}
+	
+	private List&lt;String&gt; getDiagonalHorizontalStrings(List&lt;String&gt; dnaList) {
+<span class="fc" id="L53">		int contDiagonal = 0;</span>
+<span class="fc" id="L54">		int contInvertedDiagonal = dnaList.get(0).length();</span>
+<span class="fc" id="L55">		List&lt;String&gt; listResult = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L56">		String stringResult = &quot;&quot;;</span>
+<span class="fc" id="L57">		String stringResultInv = &quot;&quot;;</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		for (String string : dnaList) {</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">			if (contDiagonal &gt;= string.length() || contInvertedDiagonal &lt;= 0) {</span>
+<span class="nc" id="L61">				break;</span>
+			}
+<span class="fc" id="L63">			stringResult += string.substring(contDiagonal, contDiagonal + 1);</span>
+<span class="fc" id="L64">			contDiagonal++;</span>
+<span class="fc" id="L65">			stringResultInv += string.substring(contInvertedDiagonal - 1, contInvertedDiagonal);</span>
+<span class="fc" id="L66">			contInvertedDiagonal--;</span>
+		}
+<span class="fc" id="L68">		listResult.add(stringResult);</span>
+<span class="fc" id="L69">		listResult.add(stringResultInv);</span>
+
+<span class="fc" id="L71">		return listResult;</span>
+	}
+
+	/**
+	 * Este metodo permite obtner una lista con la informacion recuperada del mapa
+	 * 
+	 * @param verticalStrings
+	 * @return
+	 */
+	private Collection&lt;String&gt; getMapList(Map&lt;Integer, String&gt; verticalStrings) {
+
+<span class="fc" id="L82">		List&lt;String&gt; cadenas = verticalStrings.entrySet().stream().map(x -&gt; x.getValue()).collect(Collectors.toList());</span>
+<span class="fc" id="L83">		return cadenas;</span>
+	}
+
+	private Map&lt;Integer, String&gt; getVerticalStrings(List&lt;String&gt; stringList) {
+<span class="fc" id="L87">		Map&lt;Integer, String&gt; strings = new HashMap&lt;Integer, String&gt;();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		for (String string : stringList) {</span>
+<span class="fc" id="L89">			getVerticalListXString(string, strings);</span>
+		}
+<span class="fc" id="L91">		return strings;</span>
+	}
+
+	/**
+	 * Este metodo permite pasar por referencia al mapa cada una de las letras
+	 * verticales dentro del arreglo de string
+	 * 
+	 * @param string
+	 * @param strings
+	 */
+	private void getVerticalListXString(String string, Map&lt;Integer, String&gt; strings) {
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (int i = 0; i &lt;= string.length() - 1; i++) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (!strings.containsKey(i)) {</span>
+<span class="fc" id="L105">				strings.put(i, String.valueOf(string.charAt(i)));</span>
+<span class="fc" id="L106">			} else {</span>
+<span class="fc" id="L107">				String back = strings.get(i);</span>
+<span class="fc" id="L108">				strings.remove(i);</span>
+<span class="fc" id="L109">				strings.put(i, back + String.valueOf(string.charAt(i)));</span>
+			}
+		}
+
+<span class="fc" id="L113">	}</span>
+
+	/**
+	 * Metodo que permite verificar la estructura de listDna, si las columnas y las
+	 * filas no corresponden saca error, o si hay letras que no corresponden a las
+	 * asociadas como letra valida
+	 * 
+	 * @param listDna Dna de mutante o humano
+	 * @return ValidadorResult&lt;Boolean&gt; que determina si puede o no continuar
+	 *         evaluando la cadena
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	private ValidadorResult&lt;Boolean&gt; verifyStructure(List&lt;String&gt; listDna) {
+<span class="pc bpc" id="L126" title="1 of 4 branches missed.">		List&lt;String&gt; listaCadenaErradas = listDna.stream().filter(x -&gt; x.matches(MessagesModel.PATTERN_LETTERS_FAILED) || x.length() &lt; 4).collect(Collectors.toList());</span>
+<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		if (listaCadenaErradas!=null &amp;&amp; !listaCadenaErradas.isEmpty()) {</span>
+		
+<span class="fc" id="L129">			return ValidadorResult.error(new ModelError(MessagesModel.STRING_FAIL_IN_STRUCTURE,MessagesModel.MODEL_01,listaCadenaErradas.get(0)));</span>
+		}
+
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		Boolean colFileNoEqual=listDna.stream().anyMatch(x-&gt; x.length()!=listDna.size());</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if(colFileNoEqual) {</span>
+<span class="fc" id="L134">			return ValidadorResult.error(new ModelError(MessagesModel.COL_FILE_ERROR, MessagesModel.MODEL_02, null));</span>
+		}
+<span class="fc" id="L136">		return ValidadorResult.ok(Boolean.TRUE);</span>
+	}
+
+	/**
+	 * Metodo que permite contar las coincidencia de las letras especificadas dentro
+	 * de la cadena stringDNA
+	 * 
+	 * @param stringDna
+	 * @return
+	 */
+	private int getCountDna(String stringDna) {
+<span class="fc" id="L147">		int veces = stringDna.length() - 3;</span>
+<span class="fc" id="L148">		int posInicial = 0;</span>
+<span class="fc" id="L149">		int posFinal = 4;</span>
+<span class="fc" id="L150">		int contar = 0;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (int i = 0; i &lt;= (veces - 1); i++) {</span>
+<span class="fc" id="L152">			String cadena = stringDna.substring(posInicial, posFinal);</span>
+<span class="fc" id="L153">			posInicial = posInicial + 1;</span>
+<span class="fc" id="L154">			posFinal = posInicial + 4;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">			if (MutantDnaEnum.getDnaMutant(cadena)) {</span>
+<span class="fc" id="L156">				contar++;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">				if ((stringDna.length() - posFinal) &lt;3) {</span>
+
+<span class="fc" id="L159">					break;</span>
+				}
+			}
+		}
+
+<span class="fc" id="L164">		return contar;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

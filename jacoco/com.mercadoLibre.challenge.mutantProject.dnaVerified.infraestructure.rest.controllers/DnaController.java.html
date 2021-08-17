@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DnaController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">proyectoMutante</a> &gt; <a href="index.source.html" class="el_package">com.mercadoLibre.challenge.mutantProject.dnaVerified.infraestructure.rest.controllers</a> &gt; <span class="el_source">DnaController.java</span></div><h1>DnaController.java</h1><pre class="source lang-java linenums">package com.mercadoLibre.challenge.mutantProject.dnaVerified.infraestructure.rest.controllers;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.command.CreateAdnCommand;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.commandBus.CommandBus;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.query.DnaStatsQueryDTO;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.aplication.query.querybus.QueryBus;
+import com.mercadoLibre.challenge.mutantProject.dnaVerified.infraestructure.share.constants.MessageInfraestructure;
+
+
+@RestController
+@RequestMapping(&quot;/mutant&quot;)
+public class DnaController {
+
+	private QueryBus queryBus;
+	
+	private CommandBus commandBus;
+	
+<span class="fc" id="L29">	  public DnaController( CommandBus commandBus, QueryBus queryBus) {</span>
+<span class="fc" id="L30">		  this.queryBus=queryBus;</span>
+<span class="fc" id="L31">	        this.commandBus = commandBus;</span>
+<span class="fc" id="L32">	    }</span>
+
+	@PostMapping
+	public ResponseEntity verifyMutant(@RequestBody List&lt;String&gt; dnaList)  {
+		 
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">		if(dnaList==null || dnaList.isEmpty()) {</span>
+<span class="fc" id="L38">			return new ResponseEntity&lt;&gt;(MessageInfraestructure.SHOULD_ADD_DNA, HttpStatus.FORBIDDEN);</span>
+		}
+<span class="fc" id="L40">		CreateAdnCommand command = CreateAdnCommand.Builder.getInstance()</span>
+<span class="fc" id="L41">	                .adnList(dnaList)</span>
+<span class="fc" id="L42">	                .build();</span>
+<span class="fc" id="L43">		 Boolean returnVerify= null;</span>
+		  try {
+<span class="fc" id="L45">			returnVerify=commandBus.handle(command);</span>
+<span class="fc" id="L46">		} catch (Exception e) {</span>
+<span class="fc" id="L47">			return new ResponseEntity&lt;&gt;(e.getMessage(), HttpStatus.FORBIDDEN);</span>
+		}
+		  
+		
+<span class="fc" id="L51">		return ResponseEntity.ok(returnVerify);</span>
+	}
+	
+	   @GetMapping(&quot;/stats&quot;)
+	    @ResponseBody
+	    public ResponseEntity&lt;DnaStatsQueryDTO&gt; getStatsCheck() throws Exception {
+	  
+<span class="fc" id="L58">		   DnaStatsQueryDTO dnaStatistics = queryBus.handle(DnaStatsQueryDTO.class.getCanonicalName());</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">	        if (dnaStatistics == null) {</span>
+<span class="fc" id="L60">	            return ResponseEntity.noContent().build();</span>
+	        }
+<span class="fc" id="L62">	        return ResponseEntity.ok().body(dnaStatistics);</span>
+	    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

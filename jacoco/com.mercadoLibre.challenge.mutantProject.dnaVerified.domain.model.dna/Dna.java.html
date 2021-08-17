@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dna.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">proyectoMutante</a> &gt; <a href="index.source.html" class="el_package">com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna</a> &gt; <span class="el_source">Dna.java</span></div><h1>Dna.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.mercadoLibre.challenge.mutantProject.dnaVerified.domain.model.dna;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+
+/**
+ * Entidad que contiene la informacion del adn y su
+ * correspondiente verificacion que determina si es o no mutante
+ * la cual representa la informacion de la tabla en base de datos
+ * @author Uberney Castaneda Garzon &lt;castaney@gmail.com&gt;
+ *
+ */
+@Entity
+@Table(name=&quot;pru_verificacionAdn&quot;)
+public class Dna implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	
+<span class="fc" id="L31">	public Dna( String adn, Boolean esMutante) {</span>
+	
+<span class="fc" id="L33">		this.adn = adn;</span>
+<span class="fc" id="L34">		this.esMutante = esMutante;</span>
+<span class="fc" id="L35">	}</span>
+	
+	
+<span class="fc" id="L38">	public Dna() {}</span>
+
+
+	/**Identificador de la entidad*/
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private Long id;
+	/**cadena de adn*/
+	@Column(nullable=false)
+	private String adn;
+	/**representa si es o no mutante*/
+	@Type(type = &quot;yes_no&quot;)
+	@Column(nullable=false)
+	private Boolean esMutante;
+	/**
+	 * Permite obener valor de atributo
+	 * @return the id
+	 */
+	public Long getId() {
+<span class="fc" id="L58">		return id;</span>
+	}
+	/**
+	 * Permite cambiar el valor del atributo
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+<span class="nc" id="L65">		this.id = id;</span>
+<span class="nc" id="L66">	}</span>
+	/**
+	 * Permite obener valor de atributo
+	 * @return the adn
+	 */
+	public String getAdn() {
+<span class="nc" id="L72">		return adn;</span>
+	}
+	/**
+	 * Permite cambiar el valor del atributo
+	 * @param adn the adn to set
+	 */
+	public void setAdn(String adn) {
+<span class="nc" id="L79">		this.adn = adn;</span>
+<span class="nc" id="L80">	}</span>
+	/**
+	 * Permite obener valor de atributo
+	 * @return the esMutante
+	 */
+	public Boolean getEsMutante() {
+<span class="nc" id="L86">		return esMutante;</span>
+	}
+	/**
+	 * Permite cambiar el valor del atributo
+	 * @param esMutante the esMutante to set
+	 */
+	public void setEsMutante(Boolean esMutante) {
+<span class="nc" id="L93">		this.esMutante = esMutante;</span>
+<span class="nc" id="L94">	}</span>
+	
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
